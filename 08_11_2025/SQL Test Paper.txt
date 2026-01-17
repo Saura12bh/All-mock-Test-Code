@@ -1,0 +1,75 @@
+SQL Test Paper
+
+1. Department Table :-
+Column Name      Data Type            Constraints                        Description
+dept_id         INT            PRIMARY KEY,AUTO_INCREMENT              Unique ID for each department
+dept_name   VARCHAR(100)       NOT NULL, UNIQUE                 Name of the department (must beunique)
+location     VARCHAR(100)       NOT NULL                                    Department location
+
+
+=>Table Create query->create table department(dept_id int(10) primary key auto_increment,dept_name varchar(100) not null unique,location varchar(100) not null);
+
+2. Employee Table :-
+ColumnName       Data Type            Constraints                       Description
+emp_id          INT             PRIMARY KEY,AUTO_INCREMENT         Unique employee ID
+emp_name    VARCHAR(100)        NOT NULL                         Employee’s full name
+email       VARCHAR(100)      UNIQUE, NOT NULL                 Employee’s official email
+salary       DECIMAL(10,2)   NOT NULL, CHECK (salary > 0)   Employee salary (must be positive)
+hire_date    DATE               NOT NULL                    Date of joining
+dept_id        INT        FOREIGN KEY REFERENCES
+                         Department(dept_id) ON
+                         UPDATE CASCADE ON DELETE
+                                SET NULL
+
+=>create table employee (emp_id int(10) primary key auto_increment, emp_name varchar(100) not null, email varchar(100) unique not null,salary decimal(10,2) not null check (salary > 0),hire_date date not null, dept_id int,foreign key (dept_id) references department(dept_id) on update cascade on delete set null);
+
+3. Project Table :-
+Column Name        Data Type           Constraints                        Description
+project_id        INT           PRIMARY KEY,AUTO_INCREMENT          Unique project ID
+project_name    VARCHAR(100)   NOT NULL                          Name of the project
+start_date      DATE         NOT NULL                        Project start date
+end_date        DATE          NULL                   Project end date (NULL if ongoing)
+emp_id          INT   FOREIGN KEY REFERENCES
+                      Employee(emp_id) ON UPDATE
+                     CASCADE ON DELETE CASCADE
+
+=>create table project (project_id int primary key auto_increment, project_name varchar(100) not null, start_date date not null,end_date date null,emp_id int,foreign key (emp_id) references employee(emp_id) on update cascade on delete cascade);
+
+Data insert Query=>
+1->Department
+insert into department(dept_name, location)  values ('hr','Sangamner'),('developer','pune'),('testing', 'mumbai'),('medai', 'nashik');
+
+2->Employee
+insert into employee (emp_name, email, salary, hire_date, dept_id) values
+('a', 'a@gmail.com', 65000.00, '2025-04-15', 1),
+('b', 'b@gmail.com', 85000.00, '2025-07-10', 2),
+('c', 'c@gmail.com', 92000.00, '2025-01-05', 2),
+('d', 'd@gmail.com', 78000.00, '2025-09-12', 3),
+('e', 'e@gmail.com', 55000.00, '2025-03-20', 4);
+
+3->Project 
+insert into project (project_name, start_date, end_date, emp_id) values
+('carshow system', '2024-02-01', null, 1),
+('ebook shop', '2025-05-10', '2025-09-30', 2),
+('college mgement System', '2025-03-01', null, 3),
+('Stack system', '2024-06-15', '2025-05-10', 4),
+('khata book app', '2025-01-01', null, 5),
+('inventory system', '2024-11-10', null, 4),
+('e-commerce site', '2024-04-12', null, 3);
+
+
+Queries :
+1. Display department names and the average salary of employees in each  department.
+->select d.dept_name,avg(e.salary) from department d join employee e on d.dept_id=e.dept_id group by d.dept_name;
+
+3. Display department names and the total salary of employees in each department only for departments where total salary > 1,00,000.
+->select d.dept_name,sum(e.salary) from department d join employee e on d.dept_id=e.dept_id group by d.dept_name having sum(e.salary)>100000;
+
+4. Find the total number of projects handled by each employee.
+->select e.emp_name,count(p.project_id) from employee e left join project p on e.emp_id=p.emp_id group by e.emp_name;
+
+5. List departments that have more than 2 employees.
+=>select d.dept_name,count(e.emp_id) from department d join employee e on d.dept_id=e.dept_id group by d.dept_name having count(e.emp_id)>2;
+
+6. Find the average salary of employees handling at least one project.
+select avg(e.salary) as avg_salary from employee e where e.emp_id in (select distinct emp_id from project);

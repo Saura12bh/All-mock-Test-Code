@@ -1,0 +1,295 @@
+mysql> create database clg;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use clg
+Database changed
+
+1. College Table : 
+ 
+Field Type Null Key Default Extra 
+
+college_id INT NO PRI NULL  
+college_name VARCHAR(100) YES  NULL  
+location VARCHAR(100) YES  NULL  
+
+=>create table college(college_id int(10) primary key,college_name varchar(100),location varchar(100));
+mysql> desc college;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| college_id   | int          | NO   | PRI | NULL    |       |
+| college_name | varchar(100) | YES  |     | NULL    |       |
+| location     | varchar(100) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+
+data Insert Query=>insert into college values(1, 'SMBST college Sangamner', 'Sangamner'),(2, 'Dere College Sangamner', 'Malpani Nagar'),(3, 'PVP', 'loni');
+mysql> select * from college;
++------------+-------------------------+---------------+
+| college_id | college_name            | location      |
++------------+-------------------------+---------------+
+|          1 | SMBST college Sangamner | Sangamner     |
+|          2 | Dere College Sangamner  | Malpani Nagar |
+|          3 | PVP                     | loni          |
++------------+-------------------------+---------------+
+3 rows in set (0.00 sec)
+
+ 
+2. Department Table : 
+ 
+Field Type Null Key Default Extra 
+dept_id INT NO PRI NULL  
+dept_name VARCHAR(100) YES  NULL  
+college_id INT YES MUL NULL  
+
+=>create table department (dept_id int(10) primary key,dept_name varchar(100),college_id int(10),foreign key (college_id) references college(college_id));
+
+ mysql> desc department;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| dept_id    | int          | NO   | PRI | NULL    |       |
+| dept_name  | varchar(100) | YES  |     | NULL    |       |
+| college_id | int          | YES  | MUL | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+Data Insert Query=>insert into department values(101, 'BCS', 1),(102, 'BCA', 1),(103, 'MBA', 2),(104, 'MCS', 3);
+mysql> select * from department;
++---------+-----------+------------+
+| dept_id | dept_name | college_id |
++---------+-----------+------------+
+|     101 | BCS       |          1 |
+|     102 | BCA       |          1 |
+|     103 | MBA       |          2 |
+|     104 | MCS       |          3 |
++---------+-----------+------------+
+4 rows in set (0.00 sec)
+
+
+3. Students Table : 
+Field Type Null Key Default Extra 
+student_id INT NO PRI NULL  
+student_name VARCHAR(100) YES  NULL  
+dept_id INT YES MUL NULL  
+age INT YES  NULL  
+
+=>create table students (student_id int(10) primary key,student_name varchar(100),dept_id int(10),age int(10),foreign key(dept_id) references department(dept_id));
+ mysql> desc students;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| student_id   | int          | NO   | PRI | NULL    |       |
+| student_name | varchar(100) | YES  |     | NULL    |       |
+| dept_id      | int          | YES  | MUL | NULL    |       |
+| age          | int          | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+Insert Qury->insert into students values(1,'Sai',101,20),(2, 'Shyam',101,21),(3,'Ganesh',102,22),(4,'Ram',103,23),(5,'Sita',104,21),(6,'A',103,22),(7,'B',101,20);
+mysql> select * from students;
++------------+--------------+---------+------+
+| student_id | student_name | dept_id | age  |
++------------+--------------+---------+------+
+|          1 | Sai          |     101 |   20 |
+|          2 | Shyam        |     101 |   21 |
+|          3 | Ganesh       |     102 |   22 |
+|          4 | Ram          |     103 |   23 |
+|          5 | Sita         |     104 |   21 |
+|          6 | A            |     103 |   22 |
+|          7 | B            |     101 |   20 |
++------------+--------------+---------+------+
+7 rows in set (0.00 sec)
+
+
+4. Course Table :  
+Field Type Null Key Default Extra 
+course_id INT NO PRI NULL  
+course_name VARCHAR(100) YES  NULL  
+student_id INT YES MUL NULL  
+
+=>create table course (course_id int(10) primary key,course_name varchar(100),student_id int,foreign key (student_id) references students(student_id));
+ysql> desc course;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| course_id   | int          | NO   | PRI | NULL    |       |
+| course_name | varchar(100) | YES  |     | NULL    |       |
+| student_id  | int          | YES  | MUL | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+
+Data insert Qury=>insert into course values (1,'Java',1),(2,'Python',1),(3,'C++',2),(4,'C',3),(5,'HTML',4),(6,'CSS',5),(7,'JS',7);
+
+mysql> select * from course;
++-----------+-------------+------------+
+| course_id | course_name | student_id |
++-----------+-------------+------------+
+|         1 | Java        |          1 |
+|         2 | Python      |          1 |
+|         3 | C++         |          2 |
+|         4 | C           |          3 |
+|         5 | HTML        |          4 |
+|         6 | CSS         |          5 |
+|         7 | JS          |          7 |
++-----------+-------------+------------+
+7 rows in set (0.00 sec)
+
+Solve This Queries :- 
+1. List all students with their department and college name. 
+=>select s.student_name, d.dept_name, c.college_name  from students s join department d on s.dept_id = d.dept_id join college c on d.college_id = c.college_id;
+n d.college_id = c.college_id;
++--------------+-----------+-------------------------+
+| student_name | dept_name | college_name            |
++--------------+-----------+-------------------------+
+| Sai          | BCS       | SMBST college Sangamner |
+| Shyam        | BCS       | SMBST college Sangamner |
+| B            | BCS       | SMBST college Sangamner |
+| Ganesh       | BCA       | SMBST college Sangamner |
+| Ram          | MBA       | Dere College Sangamner  |
+| A            | MBA       | Dere College Sangamner  |
+| Sita         | MCS       | PVP                     |
++--------------+-----------+-------------------------+
+
+2. Show all departments and the number of students in each. 
+=>select d.dept_name,count(s.student_id) from department d left join students s on d.dept_id=s.dept_id group by d.dept_id;
++-----------+---------------------+
+| dept_name | count(s.student_id) |
++-----------+---------------------+
+| BCS       |                   3 |
+| BCA       |                   1 |
+| MBA       |                   2 |
+| MCS       |                   1 |
++-----------+---------------------+
+
+3. Display students who have not enrolled in any course. 
+=>select s.student_name from students s left join course c on s.student_id = c.student_id where c.course_id is null;
++--------------+
+| student_name |
++--------------+
+| A            |
++--------------+
+
+4. List each course, its student, their department, and college. 
+=>select c.course_name, s.student_name, d.dept_name, cl.college_name from course c join students s on c.student_id=s.student_id join department d on s.dept_id=d.dept_id join college cl on d.college_id = cl.college_id;
+
++-------------+--------------+-----------+-------------------------+
+| course_name | student_name | dept_name | college_name            |
++-------------+--------------+-----------+-------------------------+
+| Java        | Sai          | BCS       | SMBST college Sangamner |
+| Python      | Sai          | BCS       | SMBST college Sangamner |
+| C++         | Shyam        | BCS       | SMBST college Sangamner |
+| JS          | B            | BCS       | SMBST college Sangamner |
+| C           | Ganesh       | BCA       | SMBST college Sangamner |
+| HTML        | Ram          | MBA       | Dere College Sangamner  |
+| CSS         | Sita         | MCS       | PVP                     |
++-------------+--------------+-----------+-------------------------+
+
+5. Show total number of courses enrolled by students in each department. 
+=>select d.dept_name, count(c.course_id) from department d join students s on d.dept_id=s.dept_id left join course c on s.student_id=c.student_id group by d.dept_name;
+
++-----------+--------------------+
+| dept_name | count(c.course_id) |
++-----------+--------------------+
+| BCS       |                  4 |
+| BCA       |                  1 |
+| MBA       |                  1 |
+| MCS       |                  1 |
++-----------+--------------------+
+
+6. Display department names and number of students enrolled in at least one 
+course.
+=>select d.dept_name,count(s.student_id) from department d join students s on d.dept_id = s.dept_id join course c on s.student_id = c.student_id group by d.dept_name;
+ +-----------+---------------------+
+| dept_name | count(s.student_id) |
++-----------+---------------------+
+| BCS       |                   4 |
+| BCA       |                   1 |
+| MBA       |                   1 |
+| MCS       |                   1 |
++-----------+---------------------+
+
+7. List colleges along with the number of students enrolled in courses from each 
+college. 
+=>select c.college_name,count(s.student_id)from college c join department d on c.college_id=d.college_id join students s on d.dept_id=s.dept_id join course cr on s.student_id = cr.student_id group by c.college_name;
+
++-------------------------+---------------------+
+| college_name            | count(s.student_id) |
++-------------------------+---------------------+
+| SMBST college Sangamner |                   5 |
+| Dere College Sangamner  |                   1 |
+| PVP                     |                   1 |
++-------------------------+---------------------+
+
+8. Find students who are the only ones in their department. 
+=>select s.student_name, d.dept_name from students s join department d on s.dept_id=d.dept_id where(select count(*) from students where dept_id=s.dept_id)=1;
+
++--------------+-----------+
+| student_name | dept_name |
++--------------+-----------+
+| Ganesh       | BCA       |
+| Sita         | MCS       |
++--------------+-----------+
+2 rows in set (0.01 sec)
+
+
+9. List all departments that have students but none of them are enrolled in any course. 
+=>select d.dept_name from department d join students s on d.dept_id=s.dept_id left join course c on s.student_id=c.student_id where c.course_id is null;
++-----------+
+| dept_name |
++-----------+
+| MBA       |
++-----------+
+1 row in set (0.00 sec)
+
+10. Display all courses along with student name and their college location. 
+=>select c.course_name,s.student_name,cl.location from course c join students s on c.student_id=s.student_id join department d on s.dept_id=d.dept_id join college cl on d.college_id = cl.college_id;
+
++-------------+--------------+---------------+
+| course_name | student_name | location      |
++-------------+--------------+---------------+
+| Java        | Sai          | Sangamner     |
+| Python      | Sai          | Sangamner     |
+| C++         | Shyam        | Sangamner     |
+| JS          | B            | Sangamner     |
+| C           | Ganesh       | Sangamner     |
+| HTML        | Ram          | Malpani Nagar |
+| CSS         | Sita         | loni          |
++-------------+--------------+---------------+
+7 rows in set (0.00 sec)
+
+11. Find the names of students who belong to the department that is located in the college named 'ABC College' using subquery.
+ 
+12. Find the names of students who are enrolled in the maximum number of courses 
+using subquery. 
+13. Create a view StudentDepartmentView that displays the student name, age,department name, and college name for all students. 
+=>create view studentdepartmentview as
+select s.student_name, s.age, d.dept_name, c.college_name from students s join department d on s.dept_id = d.dept_id
+join college c on d.college_id = c.college_id;
+
+mysql> select * from studentdepartmentview;
++--------------+------+-----------+-------------------------+
+| student_name | age  | dept_name | college_name            |
++--------------+------+-----------+-------------------------+
+| Sai          |   20 | BCS       | SMBST college Sangamner |
+| Shyam        |   21 | BCS       | SMBST college Sangamner |
+| B            |   20 | BCS       | SMBST college Sangamner |
+| Ganesh       |   22 | BCA       | SMBST college Sangamner |
+| Ram          |   23 | MBA       | Dere College Sangamner  |
+| A            |   22 | MBA       | Dere College Sangamner  |
+| Sita         |   21 | MCS       | PVP                     |
++--------------+------+-----------+-------------------------+
+7 rows in set (0.01 sec)
+
+14. Create a view CollegeCourseSummary that shows the college name, student 
+name, and course name for all students enrolled in at least one course. If a student 
+is not enrolled in any course, they should not appear. 
+15. Create a trigger whenever a new student is inserted into the Student table, 
+automatically insert a default course "Orientation" into the Course table for that 
+student. 
+16. Create a trigger to automatically update a student's age by adding 1 when their 
+department changes (i.e., on UPDATE of dept_id in the Student table). 
+17. Create a procedure to get the list of students along with their department and 
+college, filtered by a given college location. 
+18. Create a procedure to get the count of students enrolled in each course along 
+with the department and college details. Include courses with zero students as well. 
+19. Create a function to check if a number is perfect number or not. 
+20. Create a function to check if a number is strong number or not.

@@ -1,0 +1,17 @@
+how to solve the dependency or class not found error
+1->right click on project->properties ->deployment assembly ->add->maven->apply ->apply and close
+  jr maven dependency disli  nahi tr he kraych
+
+2->package problem or floader problem
+1-> ../ servlet file name
+2-> /project name/file name
+
+
+css link krayla asa path deycha
+<link rel="stylesheet" href="../css/style.css">
+or
+<link rel="stylesheet" href="/ServletPratical/css/style.css">
+
+img path
+/campusManagementSystemServlet/img/kharcha.png"
+ <img src="./img/kharcha.png" class="img-fluid" alt="" />

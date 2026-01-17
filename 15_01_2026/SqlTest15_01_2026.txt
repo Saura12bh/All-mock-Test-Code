@@ -1,0 +1,177 @@
+mysql> use SqlTest15_01_2026;
+Database changed
+mysql> create table student(sid int(10) primary key auto_increment,sname varchar(20) not null ,email varchar(20)unique,city varchar(30) not null,admission_year int(10) not null);
+Query OK, 0 rows affected, 2 warnings (0.23 sec)
+
+mysql> select * from student;
++-----+-------+-------------+-----------+----------------+
+| sid | sname | email       | city      | admission_year |
++-----+-------+-------------+-----------+----------------+
+|   1 | a     | a@gmail.com | sangamner |           2026 |
+|   2 | b     | b@gmail.com | pune      |           2025 |
+|   3 | c     | c@gmail.com | mumbai    |           2025 |
+|   4 | d     | d@gmail.com | nashik    |           2026 |
++-----+-------+-------------+-----------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> create table course(cid int(20) primary key auto_increment,cname varchar(30) not null,fees int(10) not null,duration_months int(10) not null);
+Query OK, 0 rows affected, 3 warnings (0.04 sec)
+mysql> select * from course;
++-----+---------------+-------+-----------------+
+| cid | cname         | fees  | duration_months |
++-----+---------------+-------+-----------------+
+|   1 | java          | 40000 |              12 |
+|   2 | python        | 50000 |              10 |
+|   3 | c#            | 30000 |               8 |
+|   4 | data scienece | 50000 |              10 |
++-----+---------------+-------+-----------------+
+4 rows in set (0.00 sec)
+
+
+create table enrollment(eid int(10) primary key auto_increment,sid int(10),cid int(10),enrollment_date Date,status varchar(20) not null, foreign key (sid) references student(sid),foreign key (cid) references course(cid));
+
+
+mysql> select * from enrollment;
++-----+------+------+-----------------+----------+
+| eid | sid  | cid  | enrollment_date | status   |
++-----+------+------+-----------------+----------+
+|   1 |    1 |    1 | 2025-01-05      | active   |
+|   2 |    2 |    2 | 2025-02-05      | active   |
+|   3 |    3 |    3 | 2025-02-05      | inactive |
+|   4 |    4 |    4 | 2025-04-05      | active   |
++-----+------+------+-----------------+----------+
+4 rows in set (0.00 sec)
+
+1. Write a query to display students whose email contains ‘gmail’.
+->mysql> select *from student where email like '%gmail%';
++-----+-------+-------------+-----------+----------------+
+| sid | sname | email       | city      | admission_year |
++-----+-------+-------------+-----------+----------------+
+|   1 | a     | a@gmail.com | sangamner |           2026 |
+|   2 | b     | b@gmail.com | pune      |           2025 |
+|   3 | c     | c@gmail.com | mumbai    |           2025 |
+|   4 | d     | d@gmail.com | nashik    |           2026 |
++-----+-------+-------------+-----------+----------------+
+4 rows in set (0.01 sec)
+
+2. Write a query to find the average course fees.
+->mysql> select avg(fees) from course ;
++------------+
+| avg(fees)  |
++------------+
+| 42500.0000 |
++------------+
+1 row in set (0.01 sec)
+
+3. Write a query to display the number of students enrolled in each course.
+->mysql> select c.cname ,count(s.sid) from course c join enrollment e on c.cid=e.eid join student s on e.sid=s.sid group by c.cid;
++---------------+--------------+
+| cname         | count(s.sid) |
++---------------+--------------+
+| java          |            1 |
+| python        |            1 |
+| c#            |            1 |
+| data scienece |            1 |
++---------------+--------------+
+
+4. Write a query to display total enrollments year-wise based on enrollment date.
+->select 
+5. Write a query to display students who are enrolled in the course ‘Java Full Stack’.
+-> mysql> select s.sname  from student s join enrollment e on s.sid=e.eid join course c on e.cid=c.cid where cname='java';
++-------+
+| sname |
++-------+
+| a     |
++-------+
+1 row in set (0.00 sec)
+
+6. Write a query to display students who enrolled most recently.
+->mysql> select s.sid,s.sname,s.email,e.enrollment_date from student s join enrollment e on s.sid=e.eid order by e.enrollment_date desc limit  1;
++-----+-------+-------------+-----------------+
+| sid | sname | email       | enrollment_date |
++-----+-------+-------------+-----------------+
+|   4 | d     | d@gmail.com | 2025-04-05      |
++-----+-------+-------------+-----------------+
+1 row in set (0.00 sec)
+
+7. Write a query to display students who are not enrolled in any course.
+-> mysql> select s.sid,s.sname,s.email from student s join enrollment e on s.sid=e.eid join course c on e.cid=c.cid where e.sid=null;
+Empty set (0.00 sec)
+
+8. Write a query to display course details in which the minimum number of students are enrolled.
+-> select c.cid,c.cname,count(s.sid)  from course c join enrollment e on c.cid=e.eid  join student s on e.sid=s.sid  group by c.cid order by s.sid limit 1;
++-----+-------+--------------+
+| cid | cname | count(s.sid) |
++-----+-------+--------------+
+|   1 | java  |            1 |
++-----+-------+--------------+
+1 row in set (0.00 sec)
+
+9. Write a query to display students who are enrolled in more than one course.
+select s.sname ,count(c.cid) from student s join enrollment e on s.sid=e.sid join course c on e.cid=c.cid group by s.sname having count(c.cid)>1;
++-------+--------------+
+| sname | count(c.cid) |
++-------+--------------+
+| a     |            3 |
++-------+--------------+
+1 row in set (0.00 sec)
+ 
+10. Write a query to display students who enrolled in courses with fees less than the average course fees.
+mysql> select s.sname,c.cname,c.fees from student s join enrollment e on s.sid=e.sid join course c on e.cid=c.cid where c.fees<(select avg(fees) from course);
++-------+-------+-------+
+| sname | cname | fees  |
++-------+-------+-------+
+| a     | java  | 40000 |
+| c     | c#    | 30000 |
+| a     | c#    | 30000 |
++-------+-------+-------+
+3 rows in set (0.00 sec)
+
+11. Write a query to display course details that have the highest number of enrollments.
+->mysql> select c.cname,count(e.sid) from course c join enrollment e on c.cid=e.sid group by e.sid limit 1;
++-------+--------------+
+| cname | count(e.sid) |
++-------+--------------+
+| java  |            3 |
++-------+--------------+
+1 row in set (0.00 sec)
+ 
+12. Write a query to display courses whose fees are higher than the average fees of courses that have at least one enrollment.
+-> mysql> select s.sname,c.cname,c.fees from student s join enrollment e on s.sid=e.sid join course c on e.cid=c.cid where c.fees>(select avg(fees) from course);
++-------+---------------+-------+
+| sname | cname         | fees  |
++-------+---------------+-------+
+| b     | python        | 50000 |
+| d     | data scienece | 50000 |
+| a     | data scienece | 50000 |
++-------+---------------+-------+
+3 rows in set (0.00 sec)
+
+13. Write a SQL query to display the course name of the course having the second highest course fees.
+->mysql> mysql> select * from course where fees<(select max(fees) from course) order by fees desc limit 1;
++-----+-------+-------+-----------------+
+| cid | cname | fees  | duration_months |
++-----+-------+-------+-----------------+
+|   1 | java  | 40000 |              12 |
++-----+-------+-------+-----------------+
+1 row in set (0.00 sec)
+ 
+14. Write a stored procedure to display all students from a given city name as input parameter.
+
+15. Write a stored procedure to insert a new student record into the students table.
+delimeter //
+create procedure SaveS(In sname varchar(10),email varchar(20),city varchar(20),admission_year int(10))
+begin
+insert into student values(null,sname,email,city,admission_year)
+end
+delimeter //
+
+call  SaveS('f','f@gmail.com','pune',2026);
+
+16. Write a trigger to update the admission_year of a student to the current year if it is not provided
+during insertion into the students table.
+17. Create an index on the email column of the students table to improve search performance.
+18. Create a view to display student_name, course_name, enrollment_date.
+19. Create a view to display students who enrolled in courses in the current year.
+20. Write a query to display course names along with the total number of students enrolled and the
+total fees collected for each course.

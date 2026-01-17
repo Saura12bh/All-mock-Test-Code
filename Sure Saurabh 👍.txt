@@ -1,0 +1,255 @@
+Sure Saurabh 👍
+Below are **most frequently asked Aptitude Questions + Programming Questions** in **major IT companies (TCS, Infosys, Wipro, Accenture, Capgemini, Cognizant, etc.)**.
+I’ll keep it **simple, exam-oriented, and practical**.
+
+---
+
+## 🔹 PART 1: MOST ASKED APTITUDE QUESTIONS
+
+### 1️⃣ Percentage
+
+**Q:** A number is increased by 20% and then decreased by 20%. What is the net change?
+
+**Answer:** Decrease by **4%**
+
+**Formula:**
+Net change = ( ab / 100 )
+= ( 20 × 20 / 100 = 4% ) loss
+
+---
+
+### 2️⃣ Profit & Loss
+
+**Q:** A shopkeeper sells an item at 10% profit. If CP = 500, find SP.
+
+**Solution:**
+SP = 500 + 10% of 500
+SP = **₹550**
+
+---
+
+### 3️⃣ Ratio & Proportion
+
+**Q:** Ratio of boys to girls is 3:2. If total students are 50, how many boys?
+
+**Solution:**
+Total parts = 3 + 2 = 5
+Boys = (3/5) × 50 = **30**
+
+---
+
+### 4️⃣ Time & Work
+
+**Q:** A can do a work in 10 days, B in 20 days. How many days together?
+
+**Solution:**
+1 day work = 1/10 + 1/20 = 3/20
+Total days = **20/3 ≈ 6.67 days**
+
+---
+
+### 5️⃣ Time, Speed & Distance
+
+**Q:** Speed = 60 km/hr, Time = 2 hrs. Find distance.
+
+**Answer:**
+Distance = Speed × Time = **120 km**
+
+---
+
+### 6️⃣ Simple Interest
+
+**Q:** Find SI on ₹1000 at 10% for 2 years.
+
+**Formula:**
+SI = (P × R × T) / 100
+SI = (1000 × 10 × 2)/100 = **₹200**
+
+---
+
+### 7️⃣ Average
+
+**Q:** Average of 5 numbers is 20. What is their sum?
+
+**Answer:**
+Sum = 20 × 5 = **100**
+
+---
+
+### 8️⃣ Number Series
+
+**Q:** Find the next number:
+2, 6, 12, 20, ?
+
+**Pattern:**
++4, +6, +8
+Answer = **30**
+
+---
+
+### 9️⃣ Probability
+
+**Q:** Probability of getting a head when tossing a coin?
+
+**Answer:**
+**1/2**
+
+---
+
+### 🔟 Age Problem
+
+**Q:** Father is 30 years older than son. Son is 10 years old. Father’s age?
+
+**Answer:**
+10 + 30 = **40 years**
+
+---
+
+## 🔹 PART 2: MOST ASKED PROGRAMMING QUESTIONS
+
+### 1️⃣ Reverse a Number
+
+```java
+int n = 123, rev = 0;
+while(n != 0){
+    rev = rev * 10 + n % 10;
+    n = n / 10;
+}
+System.out.println(rev);
+```
+
+---
+
+### 2️⃣ Palindrome Number
+
+```java
+int n = 121, temp = n, rev = 0;
+while(n > 0){
+    rev = rev * 10 + n % 10;
+    n /= 10;
+}
+System.out.println(temp == rev ? "Palindrome" : "Not Palindrome");
+```
+
+---
+
+### 3️⃣ Fibonacci Series
+
+```java
+int a = 0, b = 1;
+for(int i = 1; i <= 10; i++){
+    System.out.print(a + " ");
+    int c = a + b;
+    a = b;
+    b = c;
+}
+```
+
+---
+
+### 4️⃣ Prime Number
+
+```java
+int n = 7, count = 0;
+for(int i = 1; i <= n; i++){
+    if(n % i == 0) count++;
+}
+System.out.println(count == 2 ? "Prime" : "Not Prime");
+```
+
+---
+
+### 5️⃣ Factorial
+
+```java
+int n = 5, fact = 1;
+for(int i = 1; i <= n; i++){
+    fact *= i;
+}
+System.out.println(fact);
+```
+
+---
+
+### 6️⃣ Swap Two Numbers (Without 3rd Variable)
+
+```java
+int a = 10, b = 20;
+a = a + b;
+b = a - b;
+a = a - b;
+System.out.println(a + " " + b);
+```
+
+---
+
+### 7️⃣ Largest of Three Numbers
+
+```java
+int a = 10, b = 20, c = 15;
+int max = a > b ? (a > c ? a : c) : (b > c ? b : c);
+System.out.println(max);
+```
+
+---
+
+### 8️⃣ Count Digits
+
+```java
+int n = 12345, count = 0;
+while(n > 0){
+    count++;
+    n /= 10;
+}
+System.out.println(count);
+```
+
+---
+
+### 9️⃣ Sum of Digits
+
+```java
+int n = 123, sum = 0;
+while(n > 0){
+    sum += n % 10;
+    n /= 10;
+}
+System.out.println(sum);
+```
+
+---
+
+### 🔟 String Reverse
+
+```java
+String s = "Java";
+String rev = "";
+for(int i = s.length()-1; i >= 0; i--){
+    rev += s.charAt(i);
+}
+System.out.println(rev);
+```
+
+---
+
+## 🔥 COMPANY FAVORITES (VERY IMPORTANT)
+
+✔ Number Series
+✔ Percentages
+✔ Time & Work
+✔ Prime / Palindrome
+✔ Fibonacci
+✔ String problems
+✔ Arrays (max, min, sorting)
+
+---
+
+If you want:
+
+* 📘 **Only TCS aptitude**
+* 📗 **Only Infosys pattern**
+* 🧠 **Aptitude with tricks**
+* 💻 **Programming MCQs**
+* 🇮🇳 **Marathi explanation**
+
+Just tell me 👍

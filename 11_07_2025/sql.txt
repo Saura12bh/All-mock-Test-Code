@@ -1,0 +1,175 @@
+
+Database:  Exam
+1. customers Table
+Column	Data Type	Constraints
+customer_id	INT	PRIMARY KEY, AUTO_INCREMENT
+name	VARCHAR(100)	
+email	VARCHAR(100)	UNIQUE
+phone	VARCHAR(15)	
+registered_on	DATE	
+
+=>create table customer(cid int(20) primary key auto_increment ,name varchar(20),email varchar(20) unique,phone varchar(20),registered_on date);
+
+=>insert into customer(cid, name, email, phone, registered_on) values(1, 'Sai', 'sai@gmail.com', '9876543210', '2024-01-15'),(2, 'Ramesh ', 'ramesh@gmail.com', '9876501234', '2024-02-20'),(3, 'Ganesh', 'ganesh@gmail.com', '9876009876', '2024-03-05');
+
+2. products Table
+Column	Data Type	Constraints
+product_id	INT	PRIMARY KEY, AUTO_INCREMENT
+name	VARCHAR(100)	
+category	ENUM(...)	Enum: 'Necklace', 'Earrings', 'Bracelet', 'Ring', 'Bangle'
+price	DECIMAL(10,2)	
+stock_quantity	INT	
+supplier_id	INT	(Not yet FK)
+
+=>create table product(p_id int(20) primary key auto_increment,name varchar(100),category ENUM('Necklace', 'Earrings', 'Bracelet', 'Ring', 'Bangle'),price decimal(10,2),stock_quantity int,supplier_id int(10));
+
+=>insert into product(p_id, name, category, price, stock_quantity, supplier_id) values
+(6, ' Necklace', 'Necklace', 1500.00, 2, 1),
+(7, ' Earrings', 'Earrings', 700.00, 1, 2),
+(8, 'Bracelet', 'Bracelet', 900.00, 5, 3),
+(9, ' Ring', 'Ring', 600.00, 25, 2),
+(10, 'Bangle', 'Bangle', 850.00, 15, 1);
+
+3. suppliers Table
+Column	Data Type	Constraints
+supplier_id	INT	PRIMARY KEY, AUTO_INCREMENT
+supplier_name	VARCHAR(100)	
+contact_number	VARCHAR(15)	
+city	VARCHAR(50)	
+
+=>create table supplier(s_id int(20) primary key auto_increment,s_name varchar(100),contact_number varchar(15),city varchar(50));
+
+=>insert into supplier(s_id, s_name, contact_number, city) values(1, 'Chandukaka gold', '9001234567', 'Mumbai'),(2, 'Brand Gold', '9007654321', 'pune'),(3, 'XYZ', '9011122233', 'Sangamner');
+
+4. orders Table
+Column	Data Type	Constraints
+order_id	INT	PRIMARY KEY, AUTO_INCREMENT
+customer_id	INT	FOREIGN KEY → customers(customer_id)
+order_date	DATE	
+total_amount	DECIMAL(10,2)	
+
+=>create table orders (order_id int primary key auto_increment,cid int,order_date date,total_amount decimal(10,2),foregin key (cid) references customer(cid));
+
+=>INSERT INTO orders (order_id, cid, order_date, total_amount) values
+(4, 1, '2024-03-01', 2400.00),
+(5, 2, '2024-03-03', 700.00),
+(6, 3, '2024-03-10', 1700.00);
+
+
+5. order_items Table
+Column	Data Type	Constraints
+order_item_id	INT	PRIMARY KEY, AUTO_INCREMENT
+order_id	INT	FOREIGN KEY → orders(order_id)
+product_id	INT	FOREIGN KEY → products(product_id)
+quantity	INT	
+unit_price	DECIMAL(10,2)	
+=>CREATE TABLE order_items (
+    order_item_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT,
+    p_id INT,
+    quantity INT,
+    unit_price DECIMAL(10,2),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (p_id) REFERENCES product(p_id));
+
+=>INSERT INTO order_items (order_item_id, order_id, p_id, quantity, unit_price) VALUES
+(5, 1, 1, 10, 1500.00),
+(6, 1, 3, 12, 900.00),
+(7, 2, 2, 1, 700.00),
+(8, 3, 5, 2, 850.00);
+
+6. employees Table
+Column	Data Type	Constraints
+employee_id	INT	PRIMARY KEY, AUTO_INCREMENT
+name	VARCHAR(100)	
+position	VARCHAR(50)	
+hire_date	DATE	
+salary	DECIMAL(10,2)	
+=>CREATE TABLE employees (
+    employee_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    position VARCHAR(50),
+    hire_date DATE,
+    salary DECIMAL(10,2)
+);
+
+=>INSERT INTO employees (employee_id, name, position, hire_date, salary) VALUES
+(1, 'Priya Sinha', 'Sales Executive', '2023-12-01', 25000.00),
+(2, 'Amit Chauhan', 'Store Manager', '2023-11-10', 35000.00);
+
+7. sales Table
+Column	Data Type	Constraints
+sale_id	INT	PRIMARY KEY, AUTO_INCREMENT
+employee_id	INT	
+order_id	INT	FOREIGN KEY → orders(order_id)
+sale_date	DATE	
+
+CREATE TABLE sales (
+    sale_id INT PRIMARY KEY AUTO_INCREMENT,
+    employee_id INT,
+    order_id INT,
+    sale_date DATE,
+    FOREIGN KEY (employee_id) REFERENCES employees(employee_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
+=>INSERT INTO sales (sale_id, employee_id, order_id, sale_date) VALUES
+(1, 1, 1, '2024-05-01'),
+(2, 1, 2, '2024-05-03'),
+(3, 2, 3, '2024-06-10');
+
+
+Queries :
+2.	Display all available products with stock less than 10.
+=>select * from product where  stock_quantity<10;
+
+3.	Show all orders placed in March 2025.
+=>select  * from orders where order_date between '2025-0301' and '2025-03-31';
+
+4.	Find total number of products in each category.
+=>SELECT category, count(*) as total_products from product group by category;
+
+5.	List all suppliers located in 'Mumbai'.
+=>select * from supplier where city = 'Mumbai';
+
+6.	Show order details with customer name and total order amount.
+=>select  o.order_id, c.name from orders o join customer c on o.cid = c.cid;
+
+7.	List all products sold with order ID, product name, quantity sold.
+=>select  oi.order_id, p.name from order_items oi join product p on oi.p_id = p.p_id;
+
+10.	Display the supplier name along with total stock value they provide (stock × price).
+=>select s.s_name, sum(p.stock_quantity * p.price) from supplier s join product p on s.s_id = p. supplier_id group by s.s_id;
+
+11.	Find customers who have placed more than 2 orders.
+=>select * from product where  p_id not in(select  distinct p_id FROM order_items);
+
+13.	Show customers who have ordered items worth more than ₹5000 in a single order.
+=>select c.name, o.order_id, o.total_amount from customers c join orders o on c.cid = o.cid where o.total_amount > 5000;
+
+15.	Retrieve orders where the total item quantity ordered is greater than 5.
+=>select order_id from order_items group by order_id having sum(quantity) > 5;
+
+16.	Add a GST_number column to the suppliers table (nullable).
+=>alter table supplier add column GST_number VARCHAR(20);
+
+21.	Find the total revenue generated from each product (quantity × price).
+=>select p.name,sum(oi.quantity * oi.unit_price) from product p join order_items oi on p.p_id = oi.p_id group by p.p_id;
+
+24.	Find the product with the maximum stock.
+=>select  name,stock_quantity from product order by stock_quantity;
+
+
+
+
+1.	List all customers who registered in the last 6 months.
+8.	Display employees and number of orders they handled.
+9.	Find the top 3 most sold products (by quantity).
+12.	List products never sold in any order.
+14.	Create a view employee_sales_summary with employee name, total sales handled, and total sale value.
+17.	Create a composite index on category and price in products table.
+18.	Write a stored procedure GetCustomerOrders(customerId) that returns all order IDs, dates, and total amounts for a given customer.
+19.	Create a trigger that decreases stock quantity from products table automatically after each order item is inserted.
+20.	Write a query to delete customers who haven’t placed any orders in the last 2 years.
+22.	Show the average quantity ordered per product.
+23.	Display total number of orders per customer with COUNT().
+25.	Get total sales per category.

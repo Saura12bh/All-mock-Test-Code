@@ -1,0 +1,62 @@
+dbms->dbms stand for database mgment sysyetem it is concept or system where  we can manage all our database
+
+database is concept or methodmethod loggy store the data in structed way where we can easyly store ,retrive manage  search and provide security to data
+Student database – stores roll number, name, marks
+Simple Real-Life Example
+
+Think of a register or notebook where records are written  in rows and columns.
+That register = Database
+
+Why Databases are Important
+Store large amounts of data
+Fast searching and retrieval
+Data security
+Easy backup and recovery
+
+| Database               | DBMS             |
+| ---------------------- | ---------------- |
+| Stores data            | Manages the data |
+| Collection of records  | Software system  |
+| Example: Student table | Example: MySQL   |
+
+
+Real-Life Example (Library)
+Database = Books in the library
+SQL = Commands like “show all science books”
+MySQL = Librarian who finds and manages the books
+
+alter table table name  add column clmname data type
+alter table table add column (clm dty)
+
+alter table table modify clmname datatype
+
+alter table tbl name drop clm name
+
+alter table table name rename old clm name to new clm name
+
+
+
+
+constraints are some rule ,regulation and restriction which we can apply on the database table
+
+why used
+1-provide relation between tables
+2-try to avoid null and duplicate entry
+3-to set default value in table
+4-check condition when insert the data in table
+5-prevent from invalid data
+
+types of constraints
+1-not null
+2-unique
+3-primary key
+4-foregin key
+5-default
+6-check
+7-auto_increment
+8-on delete cascade
+9-on update cascade
+10-on delete set null
+
+
+select all data from 1st table ref join 2nd table ref on 1sttableref.pk=2ndtable ref.pk group by pk hav

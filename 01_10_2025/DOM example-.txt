@@ -1,0 +1,12 @@
+DOM example->
+1->change website them  Dark to light and light to dark
+yek side la button asel kiva check box tyacha use krun
+
+
+2->form validation->sweet alert display kel=>home work
+3->display real time clock
+4->password show
+5->display user input in real time 
+aplya kde 2 box ahe yek form ani yeka box madhe normal text astil jeva apn info form madhe taknar to data lagech dusya disla pahije
+
+6->conver English to Marathi and then display
