@@ -75,7 +75,6 @@ mysql> select * from enrollment;
 +---------------+--------------+
 
 4. Write a query to display total enrollments year-wise based on enrollment date.
-->select 
 5. Write a query to display students who are enrolled in the course ‘Java Full Stack’.
 -> mysql> select s.sname  from student s join enrollment e on s.sid=e.eid join course c on e.cid=c.cid where cname='java';
 +-------+
@@ -137,7 +136,7 @@ mysql> select s.sname,c.cname,c.fees from student s join enrollment e on s.sid=e
 1 row in set (0.00 sec)
  
 12. Write a query to display courses whose fees are higher than the average fees of courses that have at least one enrollment.
--> mysql> select s.sname,c.cname,c.fees from student s join enrollment e on s.sid=e.sid join course c on e.cid=c.cid where c.fees>(select avg(fees) from course);
+-> mysql> select s.sname,c.cname,c.fees from student s join enrollment e on s.sid=e.sid join course c on e.cid=c.cid where c.fees >(select avg(fees) from course);
 +-------+---------------+-------+
 | sname | cname         | fees  |
 +-------+---------------+-------+
@@ -168,6 +167,7 @@ delimeter //
 
 call  SaveS('f','f@gmail.com','pune',2026);
 
+
 16. Write a trigger to update the admission_year of a student to the current year if it is not provided
 during insertion into the students table.
 17. Create an index on the email column of the students table to improve search performance.
@@ -175,3 +175,4 @@ during insertion into the students table.
 19. Create a view to display students who enrolled in courses in the current year.
 20. Write a query to display course names along with the total number of students enrolled and the
 total fees collected for each course.
+

@@ -1,0 +1,49 @@
+I develop some project in my academic life as follows
+first one is Campus Event Management System
+It was indusial project 
+So I develop front end as well backend and handle database
+In this project we work on two module one is student and another is admin
+Admin can manage over all system like add new event ,see all event ,downloads event pdf ,checking register student event vice and many more
+for student -student can apply for the event ,cancel the event register , download event register pdf 
+
+What  technologies you used in this project
+I use html ,css ,bootstrap and js for the front end
+and for back end I use java with sql database
+
+what is goal of the project
+the goal this project is that to reduce traditional manual working on paper .Due to this application It reduce paper working, Provide centralized data more secure.
+
+How does admin  module work
+admin can enter username and password .this data goes to back via api check the username and password with there role if data is present then session create for admin and goes to admin dashboard if data is not present then it show invalid creational
+
+What is session?
+it use for the store user data at server and using session user can go with there data to multiple 
+we can create session id and store other data in it after clicking logout session get expire 
+Session is used for the tracking user means that particular student can apply and show there data only not any other
+
+How to user roles
+for roles system I create one column for the student and adin when user is login it check role also
+
+
+how to solve when 2 user save at time
+I use session and it hold the unique id for it .so at time both student can apply for the event
+
+
+2nd one is daily expense tracker system
+the idea behind this system is that to track daily expense how many money we invest or how many money pay on which thing to track this things and simplify the process
+
+This is my indusial  project I develop frond as well as backend 
+
+I use html css js bt for front end
+and for the back end I use java
+admin -> check how many user are present ,add new functionality, delete user if need
+user ->register login ->add daily item with money ->can see all the data by name and can update and delete
+user can see data from particular dates also
+
+currently I am working on it to add some new features like  user can upload bill image or pdf , downloads report month and
+I want convert this app into spring boot and add spring security functionality
+it data having id ,name price ,date
+
+
+
+

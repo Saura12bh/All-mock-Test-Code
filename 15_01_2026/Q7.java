@@ -36,7 +36,7 @@ public void setSal(int sal) {
 }
 class SortBySal implements Comparator<Employee>{
 	public int compare(Employee e1,Employee e2)
-	{
+		{
 		if(e1.getSal()>e2.getSal())
 		{
 			return 1;
